@@ -51,19 +51,20 @@ body {
 <div class="wrapper" id="videos"></div>
 
 <script>
+// ⚡ Configuración
 const API_KEY = "AIzaSyCw1sgSV_qCUSYgiUcYeq0pQUNZIuTdKb4"; // reemplaza con tu API Key
 const CHANNEL_ID = "UCIbWfCngxTPu8Qp4VyN97XA"; // tu canal
 const MAX_VIDEOS = 6; // cuántos videos mostrar
 
-// Llamada a YouTube Data API v3
+// Llamada a la YouTube Data API v3
 fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet&order=date&maxResults=${MAX_VIDEOS}&type=video`)
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById("videos");
-    container.innerHTML = ""; // limpiamos por si hay contenido previo
+    container.innerHTML = ""; // limpiamos contenido previo
 
     data.items.forEach(item => {
-      if (!item.id.videoId) return; // aseguramos que sea video
+      if (!item.id.videoId) return; // solo videos
 
       container.innerHTML += `
         <div class="video">
@@ -73,10 +74,10 @@ fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${C
       `;
     });
 
-    // duplicamos contenido para scroll infinito
+    // duplicamos para scroll infinito
     container.innerHTML += container.innerHTML;
   })
-  .catch(err => console.error("Error al cargar videos:", err));
+  .catch(err => console.error("Error cargando videos:", err));
 </script>
 
 </body>
